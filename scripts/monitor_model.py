@@ -9,8 +9,11 @@ from evidently.report import Report
 from evidently.metrics import DatasetCorrelationsMetric, ColumnQuantileMetric, ColumnDriftMetric, DatasetDriftMetric, DatasetMissingValuesMetric, RegressionQualityMetric
 
 from evidently.ui.workspace import Workspace
-from evidently.ui.dashboards import DashboardPanelCounter, DashboardPanelPlot, CounterAgg, PanelValue, PlotType, ReportFilter
+from evidently.ui.dashboards import DashboardPanelCounter, DashboardPanelPlot, CounterAgg, PanelValue, PlotType, ReportFilter, DashboardPanelTestSuite, TestSuitePanelType
 from evidently.renderers.html_widgets import WidgetSize
+from evidently.test_suite import TestSuite
+from evidently.test_preset import RegressionTestPreset
+from evidently.ui.workspace.cloud import CloudWorkspace
 
 
 from sklearn.model_selection import train_test_split
@@ -20,6 +23,10 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
 import matplotlib.pyplot as plt
+import os
+
+EVIDENTLY_API_KEY = os.getenv('EVIDENTLY_API_KEY')
+EVIDENTLY_TEAM_ID = os.getenv('EVIDENTLY_TEAM_ID')
 
 # @task
 def load_pickle(filename: str):
@@ -65,7 +72,6 @@ def preprocess(X_train, X_val):
 
     return X_train, X_val, numerical_features, categorical_features
 
-
 # @flow
 def run_report(model_file: str):
 
@@ -102,9 +108,16 @@ def run_report(model_file: str):
 
     report.run(reference_data=X_train, current_data=X_val, column_mapping=column_mapping)
 
+
+    regression_performance = TestSuite(tests=[
+        RegressionTestPreset(),
+    ])
+    
+    regression_performance.run(reference_data=X_train, current_data=X_val)
+
     # result = report.as_dict()
 
-    return report
+    return report, regression_performance
 
 # @click.command()
 # @click.option(
@@ -114,7 +127,7 @@ def run_report(model_file: str):
 # )
 # flow
 def run_batch_monitoring(model_file="model/model.pkl"):
-    report = run_report(model_file)
+    report, regression_performance = run_report(model_file)
 
     # # Specify the file name
     # file_name = "output/dictionary.json"
@@ -123,13 +136,14 @@ def run_batch_monitoring(model_file="model/model.pkl"):
     # with open(file_name, 'w') as file:
     #     json.dump(report, file, indent=4)
 
-    ws = Workspace('workspace')
+    ws = CloudWorkspace(token=EVIDENTLY_API_KEY, url="https://app.evidently.cloud")
 
-    project = ws.create_project('Wages model monitoring')
+    project = ws.create_project('Wages model monitoring', team_id=EVIDENTLY_TEAM_ID)
     project.description = 'This project is used to monitor the model for predicting wages'
     project.save()
 
     ws.add_report(project.id, report)
+    ws.add_report(project.id, regression_performance)
 
 
     # drift_score = result['metrics'][0]['result']['drift_score']
