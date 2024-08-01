@@ -20,7 +20,7 @@ def run_download_preprocessor():
     # with open("output/preprocessor.pkl", 'wb') as file:
     #     file.write(response_1['Body'].read())
 
-    with open('output/preprocessor.pkl', 'rb') as f_in:
+    with open('preprocessor.pkl', 'rb') as f_in:
         preprocessor = pickle.load(f_in)
 
     return preprocessor
@@ -32,7 +32,7 @@ def run_download_model():
     # with open("model/model.pkl", 'wb') as file:
     #     file.write(response_2['Body'].read())
     
-    with open('model/model.pkl', 'rb') as f_in:
+    with open('model.pkl', 'rb') as f_in:
         model = pickle.load(f_in)
 
     return model
