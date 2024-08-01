@@ -2,13 +2,11 @@ import pandas as pd
 import pickle
 import click
 from prefect import task, flow
-import json
 
 from evidently import ColumnMapping
 from evidently.report import Report
 from evidently.metrics import DatasetCorrelationsMetric, ColumnQuantileMetric, ColumnDriftMetric, DatasetDriftMetric, DatasetMissingValuesMetric, RegressionQualityMetric
 
-from evidently.ui.workspace import Workspace
 from evidently.ui.dashboards import DashboardPanelCounter, DashboardPanelPlot, CounterAgg, PanelValue, PlotType, ReportFilter, DashboardPanelTestSuite, TestSuitePanelType
 from evidently.renderers.html_widgets import WidgetSize
 from evidently.test_suite import TestSuite
@@ -22,18 +20,17 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
-import matplotlib.pyplot as plt
 import os
 
 EVIDENTLY_API_KEY = os.getenv('EVIDENTLY_API_KEY')
 EVIDENTLY_TEAM_ID = os.getenv('EVIDENTLY_TEAM_ID')
 
-# @task
+@task
 def load_pickle(filename: str):
     with open(filename, "rb") as f_in:
         return pickle.load(f_in)
      
-# @task
+@task
 def prepare_data(data):
     target_column = 'earnweek'  
     data = data.dropna(subset=[target_column])
@@ -43,7 +40,7 @@ def prepare_data(data):
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
     return X_train, X_val, y_train, y_val
 
-# @task
+@task
 def preprocess(X_train, X_val):
     numerical_features = X_train.select_dtypes(include=['number']).columns.tolist()
     categorical_features = X_train.select_dtypes(include=['object']).columns.tolist()
@@ -72,7 +69,7 @@ def preprocess(X_train, X_val):
 
     return X_train, X_val, numerical_features, categorical_features
 
-# @flow
+@flow
 def run_report(model_file: str):
 
     df_train_df = pd.read_parquet('data/atus37.parquet')
@@ -119,14 +116,14 @@ def run_report(model_file: str):
 
     return report, regression_performance
 
-# @click.command()
-# @click.option(
-#     "--model_file",
-#     default="model/model.pkl",
-#     help="Model filename"
-# )
-# flow
-def run_batch_monitoring(model_file="model/model.pkl"):
+@click.command()
+@click.option(
+    "--model_file",
+    default="model/model.pkl",
+    help="Model filename"
+)
+@flow
+def run_batch_monitoring(model_file: str):
     report, regression_performance = run_report(model_file)
 
     # # Specify the file name
