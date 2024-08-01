@@ -1,0 +1,494 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 1,
+    "links": [],
+    "panels": [
+      {
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "PCC52D03280B7034C"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "mode": "percentage",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "orange",
+                  "value": 70
+                },
+                {
+                  "color": "red",
+                  "value": 85
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "id": 1,
+        "options": {
+          "minVizHeight": 75,
+          "minVizWidth": 75,
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "sizing": "auto"
+        },
+        "pluginVersion": "11.1.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-postgresql-datasource",
+              "uid": "PCC52D03280B7034C"
+            },
+            "editorMode": "builder",
+            "format": "table",
+            "rawSql": "SELECT drift_score FROM dummy_metrics LIMIT 50 ",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [
+                    {
+                      "name": "drift_score",
+                      "type": "functionParameter"
+                    }
+                  ],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            },
+            "table": "dummy_metrics"
+          }
+        ],
+        "title": "Drift Score",
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "PCC52D03280B7034C"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        },
+        "id": 2,
+        "options": {
+          "displayMode": "basic",
+          "maxVizHeight": 300,
+          "minVizHeight": 16,
+          "minVizWidth": 8,
+          "namePlacement": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "sizing": "auto",
+          "valueMode": "color"
+        },
+        "pluginVersion": "11.1.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-postgresql-datasource",
+              "uid": "PCC52D03280B7034C"
+            },
+            "editorMode": "builder",
+            "format": "table",
+            "rawSql": "SELECT dataset_drift FROM dummy_metrics LIMIT 50 ",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [
+                    {
+                      "name": "dataset_drift",
+                      "type": "functionParameter"
+                    }
+                  ],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            },
+            "table": "dummy_metrics"
+          }
+        ],
+        "title": "Dataset Drift",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "PCC52D03280B7034C"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        },
+        "id": 3,
+        "options": {
+          "displayMode": "lcd",
+          "maxVizHeight": 300,
+          "minVizHeight": 16,
+          "minVizWidth": 8,
+          "namePlacement": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "sizing": "auto",
+          "valueMode": "color"
+        },
+        "pluginVersion": "11.1.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-postgresql-datasource",
+              "uid": "PCC52D03280B7034C"
+            },
+            "editorMode": "builder",
+            "format": "table",
+            "rawSql": "SELECT missing_values FROM dummy_metrics LIMIT 50 ",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [
+                    {
+                      "name": "missing_values",
+                      "type": "functionParameter"
+                    }
+                  ],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            },
+            "table": "dummy_metrics"
+          }
+        ],
+        "title": "Missing Values",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "PCC52D03280B7034C"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "id": 4,
+        "options": {
+          "displayMode": "lcd",
+          "maxVizHeight": 300,
+          "minVizHeight": 16,
+          "minVizWidth": 8,
+          "namePlacement": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "sizing": "auto",
+          "valueMode": "color"
+        },
+        "pluginVersion": "11.1.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-postgresql-datasource",
+              "uid": "PCC52D03280B7034C"
+            },
+            "editorMode": "builder",
+            "format": "table",
+            "rawSql": "SELECT correlation FROM dummy_metrics LIMIT 50 ",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [
+                    {
+                      "name": "correlation",
+                      "type": "functionParameter"
+                    }
+                  ],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            },
+            "table": "dummy_metrics"
+          }
+        ],
+        "title": "Correlation",
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "grafana-postgresql-datasource",
+          "uid": "PCC52D03280B7034C"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "auto"
+              },
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 16
+        },
+        "id": 5,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "11.1.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "grafana-postgresql-datasource",
+              "uid": "PCC52D03280B7034C"
+            },
+            "editorMode": "builder",
+            "format": "table",
+            "rawSql": "SELECT quantile FROM dummy_metrics LIMIT 50 ",
+            "refId": "A",
+            "sql": {
+              "columns": [
+                {
+                  "parameters": [
+                    {
+                      "name": "quantile",
+                      "type": "functionParameter"
+                    }
+                  ],
+                  "type": "function"
+                }
+              ],
+              "groupBy": [
+                {
+                  "property": {
+                    "type": "string"
+                  },
+                  "type": "groupBy"
+                }
+              ],
+              "limit": 50
+            },
+            "table": "dummy_metrics"
+          }
+        ],
+        "title": "Quantile - Age",
+        "type": "table"
+      }
+    ],
+    "schemaVersion": 39,
+    "tags": [],
+    "templating": {
+      "list": []
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "browser",
+    "title": "Evidently Dashboards",
+    "uid": "ddtgs5babksg0d",
+    "version": 1,
+    "weekStart": ""
+  }
