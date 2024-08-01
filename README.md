@@ -31,13 +31,13 @@ python scripts/test_prediction.py
 [x] Linter and/or code formatter are used (1 point)
 [x] There's a Makefile (1 point)
 [x] There are pre-commit hooks (1 point)
-[x] There's a CI/CD pipeline (2 points)
+[ ] There's a CI/CD pipeline (2 points)
 
 ### Unit test
 
 - tests/test_model.py
 
-### Pylint 
+### Pylint
 
 - added ```pyproject.toml``` file to suppress inutile Pylint messages
 
@@ -46,8 +46,6 @@ python scripts/test_prediction.py
 ```bash
 pylint --recursive=y scripts/
 ```
+### Makefile
 
-
-
-
-
+- makefile ```Makefile``` in the main dir
