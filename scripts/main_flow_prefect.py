@@ -9,19 +9,15 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
 
 import mlflow
 from mlflow.entities import ViewType
 from mlflow.tracking import MlflowClient
 
-from sklearn.linear_model import LinearRegression
-#from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error
-
-from prefect import flow, task
-
 HPO_EXPERIMENT_NAME = "ridge-hyperopt"
-MODELNAME = f"ridge-best-models"
+MODELNAME = "ridge-best-models"
 
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
 mlflow.set_experiment(HPO_EXPERIMENT_NAME)
@@ -123,7 +119,7 @@ def run_training(data_path = "./output"):
         print(f"RMSE: {rmse}")
 
 @flow
-def run_register_model(data_path = "./output", top_n = 3):
+def run_register_model(top_n = 3):
 
     # Select the model with the lowest test RMSE
     experiment = client.get_experiment_by_name(HPO_EXPERIMENT_NAME)

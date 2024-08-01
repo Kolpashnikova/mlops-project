@@ -16,3 +16,6 @@ psycopg_binary
 evidently
 numpy
 jupyter
+gunicorn
+pylint
+pre-commit

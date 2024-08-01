@@ -20,18 +20,13 @@ mlflow.sklearn.autolog()
 
 @click.command()
 @click.option(
-    "--data_path",
-    default="./output",
-    help="Location where the processed data was saved"
-)
-@click.option(
     "--top_n",
     default=3,
     type=int,
     help="Number of top models that need to be evaluated to decide which one to promote"
 )
 @task
-def run_register_model(data_path: str, top_n: int):
+def run_register_model(top_n: int):
     client = MlflowClient()
 
     # Select the model with the lowest test RMSE
@@ -55,7 +50,7 @@ def run_register_model(data_path: str, top_n: int):
         print(f"run id: {best_run.info.run_id}, rmse: {best_run.data.metrics['rmse']:.4f}")
         run_id = best_run.info.run_id
         model_uri = f"runs:/{run_id}/model"
-        model_name = f"ridge-best-models"
+        model_name = "ridge-best-models"
         mlflow.register_model(model_uri, model_name)
 
         # Transition the model to the desired stage

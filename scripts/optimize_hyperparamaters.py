@@ -1,5 +1,6 @@
-import os
 import pickle
+import os
+from prefect import flow, task
 import click
 import mlflow
 import numpy as np
@@ -12,10 +13,8 @@ mlflow.set_tracking_uri("http://127.0.0.1:5000")
 mlflow.set_experiment("ridge-hyperopt")
 mlflow.sklearn.autolog()
 
-from prefect import flow, task
-
 @task
-def load_pickle(filename: str):
+def load_pickle(filename: str): 
     with open(filename, "rb") as f_in:
         return pickle.load(f_in)
 

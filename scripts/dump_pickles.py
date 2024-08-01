@@ -2,7 +2,7 @@ import os
 import click
 import boto3
 
-from prefect import flow, task
+from prefect import flow
 
 session = boto3.session.Session()
 client_spaces = session.client('s3',
@@ -34,7 +34,6 @@ def load_pickes(data_path: str, filenames: str):
             Body=open(os.path.join(data_path, filename), 'rb'), 
             ACL='public-read'            
         )
-    return
 
 if __name__ == '__main__':
     load_pickes()

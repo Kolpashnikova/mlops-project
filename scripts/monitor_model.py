@@ -7,7 +7,7 @@ from evidently import ColumnMapping
 from evidently.report import Report
 from evidently.metrics import DatasetCorrelationsMetric, ColumnQuantileMetric, ColumnDriftMetric, DatasetDriftMetric, DatasetMissingValuesMetric, RegressionQualityMetric
 
-from evidently.ui.dashboards import DashboardPanelCounter, DashboardPanelPlot, CounterAgg, PanelValue, PlotType, ReportFilter, DashboardPanelTestSuite, TestSuitePanelType
+from evidently.ui.dashboards import DashboardPanelCounter, DashboardPanelPlot, CounterAgg, PanelValue, PlotType, ReportFilter
 from evidently.renderers.html_widgets import WidgetSize
 from evidently.test_suite import TestSuite
 from evidently.test_preset import RegressionTestPreset
@@ -241,8 +241,6 @@ def run_batch_monitoring(model_file: str):
     )
 
     project.save()
-
-    return 
 
 if __name__ == '__main__':
     run_batch_monitoring()
