@@ -3,7 +3,7 @@
 # Problem Description: Wages Prediction Model Pipeline
 
 ## Objective
-The goal of this project is to develop a machine learning pipeline that predicts weekly earnings (`earnweek`) based on various features from a dataset. The pipeline is orchestrated using Prefect and integrates several key technologies including Scikit-Learn for model training, MLflow for experiment tracking and model management, and DigitalOcean Spaces for data storage.
+The goal of this project is to develop a machine learning pipeline that predicts weekly earnings (`earnweek`) based on various features from a subset of the American Time Use Survey (2003-2022). The pipeline is orchestrated using Prefect and integrates several key technologies including Scikit-Learn for model training, MLflow for experiment tracking and model management, Prefect for workflow orchestration, Evidently AI for data and model monitoring, DigitalOcean for data storage and model deployment.
 
 ## Technologies and Tools
 
