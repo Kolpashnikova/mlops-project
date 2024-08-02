@@ -83,7 +83,7 @@ prefect worker start -p my-pool -t process
 - use `main_flow_prefect.py`
 
 ```bash
-prefect deploy main_flow_prefect.py:run_script -n 'mlops-deployment' -p my-pool
+prefect deploy scripts/main_flow_prefect.py:run_script -n 'mlops-deployment' -p my-pool
 ```
 
 - run your deployment from Prefect Cloud or
