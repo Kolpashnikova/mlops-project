@@ -1,0 +1,14 @@
+version: '3'
+services:
+  function:
+    # will build ./Dockerfile
+    build: ./
+    ports:
+     - "9696:9696"
+  mlflow:
+    # will build ./Mlflow.Dockerfile
+    build:
+      context: ./
+      dockerfile: Mlflow.Dockerfile
+    ports:
+      - "5000:5000"
