@@ -5,7 +5,7 @@
 ## Problem Description
 The goal of this project is to develop a machine learning pipeline that predicts weekly earnings (`earnweek`) based on various features from a subset of the American Time Use Survey (2003-2022). The pipeline is orchestrated using Prefect and integrates several key technologies including Scikit-Learn for model training, MLflow for experiment tracking and model management, Prefect for workflow orchestration, Evidently AI for data and model monitoring, DigitalOcean for data storage and model deployment.
 
-## Pipeline Workflow
+## Project Workflow
 
 ![Project Workflow](images/Mlops-Project.png)
 
