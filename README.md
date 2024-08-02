@@ -182,12 +182,12 @@ docker-compose up -d --build
 
 ## Best Practices Implemented
 
-[x] There are unit tests (1 point)
-[ ] There is an integration test (1 point)
-[x] Linter and/or code formatter are used (1 point)
-[x] There's a Makefile (1 point)
-[x] There are pre-commit hooks (1 point)
-[ ] There's a CI/CD pipeline (2 points)
+    * [x] There are unit tests (1 point)
+    * [ ] There is an integration test (1 point)
+    * [x] Linter and/or code formatter are used (1 point)
+    * [x] There's a Makefile (1 point)
+    * [x] There are pre-commit hooks (1 point)
+    * [ ] There's a CI/CD pipeline (2 points)
 
 ### Unit test
 
