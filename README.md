@@ -17,26 +17,7 @@ The goal of this project is to develop a machine learning pipeline that predicts
 
 ## Pipeline Workflow
 
-1. **Download Data Files**:
-    - Retrieve data and preprocessed files from Digitalocean Spaces and save them locally.
-
-2. **Prepare Data**:
-    - Read the downloaded dataset, split it into features and target variables, and further split into training and validation sets.
-    - Preprocess the data by handling missing values, scaling, and encoding features.
-
-3. **Train Model**:
-    - Train a Linear Regression model on the preprocessed training data.
-    - Evaluate the model on the validation set and log the metrics using MLflow.
-
-4. **Register Model**:
-    - Identify the best model based on validation performance metrics.
-    - Register and transition the best model to the appropriate stage in MLflow.
-
-5. **Load and Save Model**:
-    - Load the best model from MLflow (based on the production stage) and save it locally for deployment.
-
-
-
+![Project Workflow](images/Mlops-Project.png)
 
 
 ## Dockerization of the Model

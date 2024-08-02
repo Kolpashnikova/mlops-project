@@ -28,7 +28,7 @@ client = MlflowClient()
 def dump_pickle(obj, filename: str):
     with open(filename, "wb") as f_out:
         return pickle.dump(obj, f_out)
-    
+
 @task
 def load_pickle(filename: str):
     with open(filename, "rb") as f_in:
@@ -42,11 +42,11 @@ def read_dataframe(filename: str):
 
 @task
 def prepare_data(data):
-    target_column = 'earnweek'  
+    target_column = 'earnweek'
     data = data.dropna(subset=[target_column])
-    X = data.drop(columns = target_column)  
+    X = data.drop(columns = target_column)
     y = data[target_column]
-    
+
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
     return X_train, X_val, y_train, y_val
 
@@ -101,12 +101,19 @@ def run_data_prep(raw_data_path = "./data", dest_path = "./output", dataset = "a
 
 @flow
 def run_training(data_path = "./output"):
+    """
+    Train a model using the training data and log the RMSE on the validation data.
+    This is a simple linear regression model for demonstration purposes (because it takes long time to run hyperparameter optimization).
+    To run full hyperparameter optimization, use the script `optimize_hyperparameters.py`.
+    args:
+        data_path: str - path to the directory containing the training and validation datasets
+    """
 
     X_train, y_train = load_pickle(os.path.join(data_path, "train.pkl"))
     X_val, y_val = load_pickle(os.path.join(data_path, "val.pkl"))
 
     mlflow.sklearn.autolog()
-    
+
     with mlflow.start_run():
 
         rf = LinearRegression()
@@ -174,7 +181,7 @@ def run_load_dump_model(dest_path = "./model", filename = "model.pkl", modelname
             dump_pickle(model, os.path.join(dest_path, filename))
             print(f"Model saved to {os.path.join(dest_path, filename)}")
             return
-        
+
     print("No model in Production stage found.")
 
 @flow(name = "wages_prediction")
@@ -186,5 +193,3 @@ def run_script():
 
 if __name__ == '__main__':
     run_script()
-
-    
