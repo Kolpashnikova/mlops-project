@@ -7,18 +7,138 @@ The goal of this project is to develop a machine learning pipeline that predicts
 
 ## Technologies and Tools
 
+- **Pandas**: For data manipulation and preparation.
 - **Scikit-Learn**: For data preprocessing, model training, and evaluation.
 - **MLflow**: For experiment tracking, model management, and registry.
-- **Prefect**: For orchestrating the entire machine learning workflow, managing tasks, and ensuring smooth execution of each step.
+- **Prefect Cloud**: For orchestrating the entire machine learning workflow, managing tasks, and ensuring smooth execution of each step.
 - **Boto3**: For interacting with DigitalOcean Spaces to download and upload data files.
-- **Evidently AI**: For monitoring and analyzing machine learning models in production to ensure their performance and stability over time.
-- **Pandas**: For data manipulation and preparation.
-- **Flask**: For the model to be deployed as a web service.
+- **Evidently AI Cloud**: For monitoring and analyzing machine learning models in production to ensure their performance and stability over time.
+- **Flask and gunicorn**: For the model to be deployed as a web service on a Digitalocean droplet.
+
+## Clone repository from GitHub
+
+- clone repository
+
+```bash
+git clone git@github.com:Kolpashnikova/mlops-project.git
+```
+
+## Set up a new conda environment for Python 3.9
+
+- this is recommended (can skip at your own risk)
+
+## Environment setting
+
+- install packages from `requirements.txt`
+
+```bash
+pip install -r requirements.txt
+```
+
+- alternatively install full environment packages (not recommended)
+
+```bash
+pip install -r requirements_freeze.txt
+```
+
+## Test the model straight away
+
+- run the following to test the model deployed on Digitalocean. The server I'm using is the cheapest (smallest) one, so response my take some time.
+
+```bash
+python scripts/test_prediction_webservice.py
+```
+
+## Download data from a bucket
+
+- download data from a public bucket `https://mlops-project.nyc3.digitaloceanspaces.com`
 
 ## Pipeline Workflow
 
 ![Project Workflow](images/Mlops-Project.png)
 
+## Set up Mlflow and login into your Prefect
+
+- start Mlflow
+
+```bash
+mlflow ui --backend-store-uri sqlite:///mlflow.db
+```
+
+- start prefect cloud (login)
+
+```bash
+prefect cloud login
+```
+
+## Run the flow
+
+- start a worker
+
+```bash
+prefect worker start -p my-pool -t process
+```
+- define a deployment
+- use `main_flow_prefect.py`
+
+```bash
+prefect deploy main_flow_prefect.py:run_script -n 'mlops-deployment' -p my-pool
+```
+
+- run your deployment from Prefect Cloud or
+
+```bash
+prefect deployment run mlops-deployment
+```
+
+You will get the following deployment flow run output:
+
+
+![Prefect Cloud Deployment Run](images/prefect_cloud.png)
+
+If you go to your deployments tab on Prefect Cloud, you will see the following:
+
+![Prefect Cloud Deployment Tab](images/prefect_cloud_deployment.png)
+
+## Hyperparameter Tuning
+
+- the hyperparameter tuning can be integrated into the `main_flow_prefect.py` but it will take quite some time, so it is separated in the project.
+
+- run hyperparameter optimization (you can skip this step as all this is already logged in Mlflow and the data for Mlflow is included with the project)
+
+```bash
+python scripts/optimize_hyperparameters.py
+```
+You will see the following logged into your Mlflow:
+
+![Mlflow experiment tracking](images/mlflow_training.png)
+
+- register models (you can skip this step because everything is already logged and data for Mlflow is provided with the project)
+
+![Mlflow model registry](images/mlflow_registry.png)
+
+If you mess up, you can see the original on the Digitalocean droplet (find IP address in `test_prediction_webservice.py` and add port 5000, like so [IP]:5000). This will take quite some time to load because again I'm using the slowest droplet as it's the cheapest as well.
+
+## Data and model monitoring
+
+- for this you need the following environmental variables in your environment (make sure you get them from your EvidentlyAI Cloud):
+```python
+EVIDENTLY_API_KEY = os.getenv('EVIDENTLY_API_KEY')
+EVIDENTLY_TEAM_ID = os.getenv('EVIDENTLY_TEAM_ID')
+```
+- run `monitor_model.py`
+
+```bash
+python scripts/monitor_model.py
+```
+
+- login into your EvidentlyAi Cloud and you will see the following dashboard:
+
+![EvidentlyAI Cloud Dashboard](images/evidently_cloud.png)
+
+- set up alert to the developer if model doesn't perform as good (here is the screenshot how to do it):
+
+![EvidentlyAI Cloud Alert](images/evidently_alert.png)
 
 ## Dockerization of the Model
 
@@ -84,3 +204,7 @@ pylint --recursive=y scripts/
 ### Makefile
 
 - makefile ```Makefile``` in the main dir
+
+## Thank you
+
+Thank you for reviewing my project! All the best on your Mlops journey!
