@@ -31,6 +31,10 @@ git clone git@github.com:Kolpashnikova/mlops-project.git
 
 - this is recommended (can skip at your own risk)
 
+```bash
+conda create -n testing-mlops-project python==3.9.11
+```
+
 ## Environment setting
 
 - install packages from `requirements.txt`
@@ -57,7 +61,7 @@ python scripts/test_prediction_webservice.py
 
 - download data from a public bucket `https://mlops-project.nyc3.digitaloceanspaces.com`
 
-To do that you can use the following script:
+To do that, you can use the following script:
 
 ```bash
 python scripts/access_public_bucket.py
