@@ -57,6 +57,13 @@ python scripts/test_prediction_webservice.py
 
 - download data from a public bucket `https://mlops-project.nyc3.digitaloceanspaces.com`
 
+To do that you can use the following script:
+
+```bash
+python scripts/access_public_bucket.py
+```
+
+This code will create a copy of `atus37.parquet` file in the data folder.
 
 ## Set up Mlflow and login into your Prefect
 
